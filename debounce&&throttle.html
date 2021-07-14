@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>防抖函数和节流函数</title>
+</head>
+<body>
+	<button id="debounce">防抖</button>
+	<div style="height: 1000px"></div>
+	<script>
+		/*
+		 * @function 防抖函数(事件触发后，在一定时间内只执行最后一次，如果在这时间内又触发了事件，则重新开始计算函数执行的时间)
+		 * @param {function} fn 需要进行防抖处理的函数
+		 * @param {number} delay 多长时间内执行最后一次fn函数
+		 */
+		function debounce(fn,delay){
+			var timer = null;
+			return function(){
+				clearTimeout(timer);
+				timer = setTimeout(function(){
+					fn.call(this);
+				},delay);
+			}
+		}
+		document.querySelector('#debounce').onclick = debounce(function(){
+			alert('进行了防抖函数的处理');
+		},1000);
+
+		/*
+		 * @function 节流函数(连续触发的事件，在一定时间内只会执行一次)
+		 * @param {function} fn 需要进行节流处理的函数
+		 * @param {number} delay 多长时间内只会执行一次fn函数
+		 */
+		function throttle(fn,delay){
+			var lastTime = 0;
+			return function(){
+				var nowTime = Date.now();
+				if(nowTime - lastTime > delay){
+					fn.call(this);
+					lastTime = nowTime;
+				}
+			}
+		}
+		document.onscroll = throttle(function(){
+			console.log('进行了节流函数的处理',new Date().toLocaleString());
+		},3000);
+	</script>
+</body>
+</html>
