@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function deepCopy(obj) {
+            if (typeof obj == 'object') {
+                var o = obj.constructor == Array ? [] : {};
+                for (var i in obj) {
+                    o[i] = (typeof obj[i] === 'object') ? deepCopy(obj[i]) : obj[i];
+                }
+            }else{
+                var o = obj;
+            }
+            return o;
+        }
+        var p1 = {
+            name: 'jack',
+            subject: {
+                type: ['HTML', 'CSS']
+            }
+        }
+        var p2 = deepCopy(p1);
+        p1.name = 'kate';
+        console.log(p1);
+        console.log(p2);
+        console.log(p1===p2);
+    </script>
+</body>
+
+</html>
